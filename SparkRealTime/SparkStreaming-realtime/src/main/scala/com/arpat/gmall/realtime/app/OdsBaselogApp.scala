@@ -45,7 +45,6 @@ object OdsBaselogApp {
             kafkaDStream = MyKafkaUtils.getKafkaDStream(ssc,topicName,groupId)
         }
 
-
         //TODO:从数据中提取offsets,不对流中的数据进行处理
         var offsetRanges: Array[OffsetRange] = null;
         val offsetRangesDStream: DStream[ConsumerRecord[String, String]] = kafkaDStream.transform(
