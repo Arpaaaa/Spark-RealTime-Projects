@@ -14,6 +14,8 @@ object MyPropsUtils {
     }
 
     def main(args: Array[String]): Unit = {
-        println(MyPropsUtils(MyConfig.KAFKA_BOOTSTRAP_SERVERS))
+        //println(MyPropsUtils(MyConfig.KAFKA_BOOTSTRAP_SERVERS))
+        //println(MyPropsUtils(MyConfig.REDIS_HOST))
     }
+
 }

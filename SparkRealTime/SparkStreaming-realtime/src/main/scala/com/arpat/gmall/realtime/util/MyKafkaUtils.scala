@@ -2,6 +2,7 @@ package com.arpat.gmall.realtime.util
 
 import org.apache.kafka.clients.consumer.{ConsumerConfig, ConsumerRecord}
 import org.apache.kafka.clients.producer.{KafkaProducer, ProducerConfig, ProducerRecord}
+import org.apache.kafka.common.TopicPartition
 import org.apache.kafka.common.serialization.StringSerializer
 import org.apache.spark.streaming.StreamingContext
 import org.apache.spark.streaming.dstream.InputDStream
@@ -51,6 +52,26 @@ object MyKafkaUtils {
     }
 
     /**
+     * 基于sparlStreaming,按照指定的offset进行消费
+     *
+     * @param ssc
+     * @param topic
+     * @param groupId
+     * @return
+     */
+    def getKafkaDStream(ssc: StreamingContext, topic: String, groupId: String, offsets: Map[TopicPartition, Long]): InputDStream[ConsumerRecord[String, String]] = {
+        //将kafka配置参数的groupId进行替换
+        consumerConfigs.put(ConsumerConfig.GROUP_ID_CONFIG, groupId)
+        consumerConfigs.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,offsets)
+
+        val KafkaDStream: InputDStream[ConsumerRecord[String, String]] = KafkaUtils.createDirectStream(ssc,
+            LocationStrategies.PreferConsistent,
+            ConsumerStrategies.Subscribe[String, String](Array(topic), consumerConfigs))
+        //最后返回KafkaDStream
+        KafkaDStream
+    }
+
+    /**
      * 生产者对象
      */
     var producer: KafkaProducer[String, String] = createProducer()
@@ -71,7 +92,7 @@ object MyKafkaUtils {
     }
 
     /**
-     * 生产(按照默认粘性分区策略
+     * 生产(按照默认粘性分区策略）
      */
     def send(topic: String, msg: String): Unit = {
         producer.send(new ProducerRecord[String, String](topic, msg))

@@ -4,6 +4,7 @@ import org.apache.kafka.common.serialization.{StringDeserializer, StringSerializ
 
 object MyConfig {
 
+    //Kafka Configuration
     val KAFKA_BOOTSTRAP_SERVERS: String = "kafka.bootstrap.server"
 
     //producer
@@ -16,5 +17,12 @@ object MyConfig {
     val KEY_DESERIALIZER_CLASS_CONFIG: Class[StringDeserializer] = classOf[StringDeserializer]
     val VALUE_DESERIALIZER_CLASS_CONFIG: Class[StringDeserializer] = classOf[StringDeserializer]
     val ENABLE_AUTO_COMMIT_CONFIG: String = "true"
-    val AUTO_OFFSET_RESET_CONFIG:String = "latest"
+    val AUTO_OFFSET_RESET_CONFIG: String = "latest"
+
+
+    //Redis Configuration
+    val REDIS_HOST: String = "redis.host"
+    val REDIS_PORT: String = "redis.port"
+
+
 }
