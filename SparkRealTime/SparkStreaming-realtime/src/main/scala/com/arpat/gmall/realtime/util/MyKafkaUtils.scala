@@ -112,7 +112,7 @@ object MyKafkaUtils {
     /**
      * 刷写缓冲区
      */
-    def flush: Unit = {
+    def flush(): Unit = {
         if (producer != null) {
             producer.flush()
         }
